@@ -11,6 +11,7 @@ Created on Wed Jul  4 09:14:28 2018
 
 import sys
 import os
+import time
 from random import shuffle
 
 # Add the current directory to the path to import ParkingLot
@@ -131,7 +132,7 @@ def get_display_preferences():
     print()
     print("📺 DISPLAY OPTIONS")
     print("-" * 20)
-    print("1. Show parking lot after each vehicle (step-by-step)")
+    print("1. Show parking lot after each vehicle (step-by-step with 1s delay)")
     print("2. Show only final result")
     print("3. Show summary only (no visual display)")
     
@@ -143,9 +144,12 @@ def get_display_preferences():
             break
         print("Please enter 1, 2, or 3.")
     
-    return int(choice)
+    # Set delay for step-by-step mode
+    delay = 1.0 if choice == "1" else 0
+    
+    return int(choice), delay
 
-def run_simulation(small_spots, med_spots, big_spots, motorcycles, cars, buses, display_mode):
+def run_simulation(small_spots, med_spots, big_spots, motorcycles, cars, buses, display_mode, delay=0):
     """Run the parking lot simulation with given parameters"""
     
     # Create the parking lot
@@ -213,6 +217,8 @@ def run_simulation(small_spots, med_spots, big_spots, motorcycles, cars, buses, 
         if display_mode == 1:  # Step-by-step
             print(f"\nAfter vehicle {i+1}/{len(vec_set)}:")
             PL.display_parking_lot()
+            if delay > 0 and i < len(vec_set) - 1:  # Don't delay after the last vehicle
+                time.sleep(delay)
         elif display_mode == 2 and i == len(vec_set) - 1:  # Final result only
             print(f"\n🏁 FINAL PARKING LOT STATE")
             print("-" * 30)
@@ -270,12 +276,12 @@ def main():
                 continue
             
             # Get display preferences
-            display_mode = get_display_preferences()
+            display_mode, delay = get_display_preferences()
             
             # Run the simulation
             successful, failed, parking_lot = run_simulation(
                 small_spots, med_spots, big_spots, 
-                motorcycles, cars, buses, display_mode
+                motorcycles, cars, buses, display_mode, delay
             )
             
             # Ask if user wants to try again
