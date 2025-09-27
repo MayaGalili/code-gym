@@ -119,18 +119,54 @@ class ParkingLot:
                 print("│", end="")
                 
                 for spot in row_spots:
+                    spot_size = spot.getSpotSize()
                     if spot.is_open():
-                        print(" [ ]", end="")
+                        if spot_size == 1:  # Small spot
+                            print(" ( )", end="")
+                        elif spot_size == 2:  # Medium spot
+                            print(" [ ]", end="")
+                        elif spot_size == 3:  # Big spot
+                            print(" { }", end="")
+                        else:
+                            print(" [ ]", end="")
                     else:
                         vehicle = spot.getParkedVec()
                         if vehicle.getType() == "MOTORCYCLE":
-                            print(" [M]", end="")
+                            if spot_size == 1:
+                                print(" (M)", end="")
+                            elif spot_size == 2:
+                                print(" [M]", end="")
+                            elif spot_size == 3:
+                                print(" {M}", end="")
+                            else:
+                                print(" [M]", end="")
                         elif vehicle.getType() == "CAR":
-                            print(" [C]", end="")
+                            if spot_size == 1:
+                                print(" (C)", end="")
+                            elif spot_size == 2:
+                                print(" [C]", end="")
+                            elif spot_size == 3:
+                                print(" {C}", end="")
+                            else:
+                                print(" [C]", end="")
                         elif vehicle.getType() == "BUS":
-                            print(" [B]", end="")
+                            if spot_size == 1:
+                                print(" (B)", end="")
+                            elif spot_size == 2:
+                                print(" [B]", end="")
+                            elif spot_size == 3:
+                                print(" {B}", end="")
+                            else:
+                                print(" [B]", end="")
                         else:
-                            print(" [?]", end="")
+                            if spot_size == 1:
+                                print(" (?)", end="")
+                            elif spot_size == 2:
+                                print(" [?]", end="")
+                            elif spot_size == 3:
+                                print(" {?}", end="")
+                            else:
+                                print(" [?]", end="")
                 
                 print(" │")
                 print("└" + "─" * (len(row_spots) * 4 - 1) + "┘")
@@ -140,23 +176,60 @@ class ParkingLot:
             print("│", end="")
             
             for i, spot in enumerate(spots):
+                spot_size = spot.getSpotSize()
                 if spot.is_open():
-                    print(" [ ]", end="")
+                    if spot_size == 1:  # Small spot
+                        print(" ( )", end="")
+                    elif spot_size == 2:  # Medium spot
+                        print(" [ ]", end="")
+                    elif spot_size == 3:  # Big spot
+                        print(" { }", end="")
+                    else:
+                        print(" [ ]", end="")
                 else:
                     vehicle = spot.getParkedVec()
                     if vehicle.getType() == "MOTORCYCLE":
-                        print(" [M]", end="")
+                        if spot_size == 1:
+                            print(" (M)", end="")
+                        elif spot_size == 2:
+                            print(" [M]", end="")
+                        elif spot_size == 3:
+                            print(" {M}", end="")
+                        else:
+                            print(" [M]", end="")
                     elif vehicle.getType() == "CAR":
-                        print(" [C]", end="")
+                        if spot_size == 1:
+                            print(" (C)", end="")
+                        elif spot_size == 2:
+                            print(" [C]", end="")
+                        elif spot_size == 3:
+                            print(" {C}", end="")
+                        else:
+                            print(" [C]", end="")
                     elif vehicle.getType() == "BUS":
-                        print(" [B]", end="")
+                        if spot_size == 1:
+                            print(" (B)", end="")
+                        elif spot_size == 2:
+                            print(" [B]", end="")
+                        elif spot_size == 3:
+                            print(" {B}", end="")
+                        else:
+                            print(" [B]", end="")
                     else:
-                        print(" [?]", end="")
+                        if spot_size == 1:
+                            print(" (?)", end="")
+                        elif spot_size == 2:
+                            print(" [?]", end="")
+                        elif spot_size == 3:
+                            print(" {?}", end="")
+                        else:
+                            print(" [?]", end="")
             
             print(" │")
             print("└" + "─" * (total_spots * 4 - 1) + "┘")
         
-        print("Legend: M=Motorcycle, C=Car, B=Bus, [ ]=Empty")
+        print("Legend: ( )=Small spot, [ ]=Medium spot, { }=Big spot")
+        print("        M=Motorcycle, C=Car, B=Bus")
         print()
 
 #%%  spot
