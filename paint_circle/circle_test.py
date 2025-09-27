@@ -197,6 +197,5 @@ def main():
         print(f"\nAn error occurred: {e}")
         print("Please try again.")
 
-''' running example '''
 if __name__ == "__main__":
     main()

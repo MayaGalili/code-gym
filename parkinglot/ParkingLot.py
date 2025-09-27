@@ -59,17 +59,28 @@ class ParkingLot:
       
     # find next open spot and park the given car if posible
     # if there is no good spot, enter the next car
-    def park_new_vec(self,new_vehicle):
+    def park_new_vec(self, new_vehicle):
+        print(f"🚗 {new_vehicle.getType()} trying to park...")
         
         total_spots_sz = self.getTotalSpotsSz()
+        parked = False
+        
         for i in range(total_spots_sz):
             if self._total_spots[i].is_open():
                 #set spot to hold the car
                 if self._total_spots[i].park_vehicle(new_vehicle):
-                    print('{} is parking in spot {} (size {}). '.format(new_vehicle.getType(), i, self._total_spots[i].getSpotSize()))
+                    print(f"✅ {new_vehicle.getType()} parked in spot {i} (size {self._total_spots[i].getSpotSize()})")
                     # add car to the parkingLot cars list
                     self._vehicle_set.append(new_vehicle)
+                    parked = True
                     break
+                else:
+                    print(f"   Spot {i} (size {self._total_spots[i].getSpotSize()}) too small for {new_vehicle.getType()}")
+        
+        if not parked:
+            print(f"❌ {new_vehicle.getType()} could not find a suitable spot!")
+        
+        return parked
                 
     def is_park_open(self):
         return (self.getOpenSpotsSz() > 0)
@@ -131,27 +142,69 @@ class BigSpot(Spot):
     find a suitable sopt and park it
     first randomly and at the next code iteration try to consider other vehicles
 '''
-# creat the parking lot
-small_spot_sz= 2
-med_spot_sz = 10
-big_spot_sz = 2
+if __name__ == "__main__":
+    # creat the parking lot
+    small_spot_sz= 2
+    med_spot_sz = 10
+    big_spot_sz = 2
 
-PL = ParkingLot(small_spot_sz, med_spot_sz,big_spot_sz)
+    PL = ParkingLot(small_spot_sz, med_spot_sz,big_spot_sz)
 
-# creat a rand set of vihacles   
-cycle_sz = 2
-cars_sz = 5
-buses_sz = 1
+    # creat a rand set of vihacles   
+    cycle_sz = 2
+    cars_sz = 5
+    buses_sz = 1
 
-vec_set = []
-for i in range(cycle_sz):
-    vec_set.append(Motorcycle())
-for i in range(cars_sz):
-    vec_set.append(Car())            
-for i in range(buses_sz):
-    vec_set.append(Bus())
-shuffle(vec_set)
+    vec_set = []
+    for i in range(cycle_sz):
+        vec_set.append(Motorcycle())
+    for i in range(cars_sz):
+        vec_set.append(Car())            
+    for i in range(buses_sz):
+        vec_set.append(Bus())
+    shuffle(vec_set)
 
-# try to park all cars
-for i in range (len(vec_set)):
-    PL.park_new_vec(vec_set[i])
+    # Display parking lot setup
+    print("=" * 50)
+    print("🅿️  PARKING LOT SIMULATION")
+    print("=" * 50)
+    print(f"Parking lot created with {PL.getTotalSpotsSz()} spots:")
+    print(f"  • {small_spot_sz} Small spots (size 1)")
+    print(f"  • {med_spot_sz} Medium spots (size 2)")  
+    print(f"  • {big_spot_sz} Big spots (size 3)")
+    print()
+    print(f"Vehicles to park: {len(vec_set)}")
+    print(f"  • {cycle_sz} Motorcycles")
+    print(f"  • {cars_sz} Cars")
+    print(f"  • {buses_sz} Buses")
+    print()
+    print("Starting parking process...")
+    print("-" * 30)
+    
+    # Track parking results
+    successful_parking = 0
+    failed_parking = 0
+    
+    # try to park all cars
+    for i in range(len(vec_set)):
+        if PL.park_new_vec(vec_set[i]):
+            successful_parking += 1
+        else:
+            failed_parking += 1
+        print()  # Add spacing between vehicles
+    
+    # Final summary
+    print("=" * 50)
+    print("📊 PARKING SUMMARY")
+    print("=" * 50)
+    print(f"Total Spots Available: {PL.getTotalSpotsSz()}")
+    print(f"Vehicles Attempted: {len(vec_set)}")
+    print(f"Successfully Parked: {successful_parking}")
+    print(f"Failed to Park: {failed_parking}")
+    print(f"Remaining Open Spots: {PL.getOpenSpotsSz()}")
+    
+    if len(vec_set) > 0:
+        efficiency = (successful_parking / len(vec_set)) * 100
+        print(f"Parking Efficiency: {efficiency:.1f}%")
+    
+    print("=" * 50)
