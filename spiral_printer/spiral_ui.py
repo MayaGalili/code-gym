@@ -92,42 +92,6 @@ def create_matrix(rows, cols):
             counter += 1
     return matrix
 
-def display_matrix(matrix, visited=None, current_cell=None, direction=""):
-    """Display the matrix with visual indicators for visited cells"""
-    rows, cols = matrix.shape
-    
-    # Calculate column widths for proper alignment
-    max_width = len(str(matrix.max()))
-    
-    # Create visited set if not provided
-    if visited is None:
-        visited = set()
-    
-    print("┌" + "─" * (cols * (max_width + 2) - 1) + "┐")
-    
-    for i in range(rows):
-        print("│", end="")
-        for j in range(cols):
-            cell_value = matrix[i][j]
-            cell_pos = (i, j)
-            
-            if cell_pos == current_cell:
-                # Currently being visited - highlight
-                print(f" [{cell_value:>{max_width}}]", end="")
-            elif cell_pos in visited:
-                # Already visited - mark with brackets
-                print(f" [{cell_value:>{max_width}}]", end="")
-            else:
-                # Not visited yet - normal display
-                print(f"  {cell_value:>{max_width}} ", end="")
-        print(" │")
-    
-    print("└" + "─" * (cols * (max_width + 2) - 1) + "┘")
-    
-    if direction:
-        print(f"Direction: {direction}")
-    print()
-
 def display_matrix_simple(matrix):
     """Display the matrix in a simple formatted way"""
     print("\n📊 ORIGINAL MATRIX:")
@@ -145,134 +109,6 @@ def display_matrix_simple(matrix):
     
     print(f"Matrix size: {rows}×{cols}")
     print()
-
-def spiral_print_visual_step_by_step(matrix):
-    """Print matrix in spiral with visual step-by-step matrix display"""
-    rows, cols = matrix.shape
-    mat_sz = rows * cols
-    i = 0
-    j = 0
-    n = 0
-    m = 0
-    step = 1
-    N, M = rows, cols
-    visited = set()
-    
-    print("\n🔄 SPIRAL TRAVERSAL (Visual Step-by-step):")
-    print("=" * 50)
-    print("Legend: [X] = Visited,  X  = Current,  X  = Not visited")
-    print()
-    
-    # Show initial empty matrix
-    print("Initial matrix:")
-    display_matrix(matrix, visited)
-    
-    while mat_sz > 0:
-        # Go right
-        if mat_sz > 0:
-            print(f"Step {step}: → Moving RIGHT")
-            for j in range(m, M):
-                if mat_sz > 0:
-                    visited.add((i, j))
-                    print(f"  Visiting cell ({i},{j}) = {matrix[i][j]}")
-                    display_matrix(matrix, visited, (i, j), "→ Right")
-                    mat_sz -= 1
-            n += 1
-            step += 1
-        
-        # Go down
-        if mat_sz > 0:
-            print(f"Step {step}: ↓ Moving DOWN")
-            for i in range(n, N):
-                if mat_sz > 0:
-                    visited.add((i, j))
-                    print(f"  Visiting cell ({i},{j}) = {matrix[i][j]}")
-                    display_matrix(matrix, visited, (i, j), "↓ Down")
-                    mat_sz -= 1
-            M -= 1
-            step += 1
-        
-        # Go left
-        if mat_sz > 0:
-            print(f"Step {step}: ← Moving LEFT")
-            for j in range(M - 1, m - 1, -1):
-                if mat_sz > 0:
-                    visited.add((i, j))
-                    print(f"  Visiting cell ({i},{j}) = {matrix[i][j]}")
-                    display_matrix(matrix, visited, (i, j), "← Left")
-                    mat_sz -= 1
-            N -= 1
-            step += 1
-        
-        # Go up
-        if mat_sz > 0:
-            print(f"Step {step}: ↑ Moving UP")
-            for i in range(N - 1, n - 1, -1):
-                if mat_sz > 0:
-                    visited.add((i, j))
-                    print(f"  Visiting cell ({i},{j}) = {matrix[i][j]}")
-                    display_matrix(matrix, visited, (i, j), "↑ Up")
-                    mat_sz -= 1
-            m += 1
-            step += 1
-    
-    print("✅ Spiral traversal complete!")
-    result = spiralPrint(matrix)
-    print(f"Final result: {' '.join(map(str, result))}")
-    print()
-
-def spiral_print_step_by_step(matrix):
-    """Print matrix in spiral with step-by-step visualization (text only)"""
-    rows, cols = matrix.shape
-    mat_sz = rows * cols
-    i = 0
-    j = 0
-    n = 0
-    m = 0
-    step = 1
-    N, M = rows, cols
-    
-    print("\n🔄 SPIRAL TRAVERSAL (Text Step-by-step):")
-    print("-" * 40)
-    
-    while mat_sz > 0:
-        # Go right
-        if mat_sz > 0:
-            print(f"\nStep {step}: → Right: ", end="")
-            for j in range(m, M):
-                print(f"{matrix[i][j]} ", end="")
-                mat_sz -= 1
-            n += 1
-            step += 1
-        
-        # Go down
-        if mat_sz > 0:
-            print(f"\nStep {step}: ↓ Down:  ", end="")
-            for i in range(n, N):
-                print(f"{matrix[i][j]} ", end="")
-                mat_sz -= 1
-            M -= 1
-            step += 1
-        
-        # Go left
-        if mat_sz > 0:
-            print(f"\nStep {step}: ← Left:  ", end="")
-            for j in range(M - 1, m - 1, -1):
-                print(f"{matrix[i][j]} ", end="")
-                mat_sz -= 1
-            N -= 1
-            step += 1
-        
-        # Go up
-        if mat_sz > 0:
-            print(f"\nStep {step}: ↑ Up:    ", end="")
-            for i in range(N - 1, n - 1, -1):
-                print(f"{matrix[i][j]} ", end="")
-                mat_sz -= 1
-            m += 1
-            step += 1
-    
-    print("\n")
 
 def run_simulation(rows, cols, display_mode):
     """Run the spiral matrix simulation with given parameters"""
@@ -304,15 +140,13 @@ def run_simulation(rows, cols, display_mode):
         print("\n")
         
     elif display_mode == 3:  # Show visual step-by-step
-        spiral_print_visual_step_by_step(matrix)
+        result = spiralPrint(matrix, visual=True)
         
     elif display_mode == 4:  # Show text step-by-step
-        spiral_print_step_by_step(matrix)
-        
-        print("🔄 FINAL SPIRAL OUTPUT:")
-        print("-" * 30)
+        print("\n🔄 SPIRAL TRAVERSAL (Text Step-by-step):")
+        print("-" * 40)
         result = spiralPrint(matrix)
-        print(" ".join(map(str, result)))
+        print(f"\nFinal result: {' '.join(map(str, result))}")
         print("\n")
     
     # Display statistics
