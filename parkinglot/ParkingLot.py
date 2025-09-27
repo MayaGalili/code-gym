@@ -97,6 +97,67 @@ class ParkingLot:
     
     def getAllSpots(self):
         return self._total_spots
+    
+    def display_parking_lot(self):
+        """Display the current parking lot status visually"""
+        spots = self._total_spots
+        total_spots = len(spots)
+        
+        print("🅿️  Current Parking Lot Status:")
+        
+        # If too many spots, display in multiple rows
+        if total_spots > 20:
+            spots_per_row = 20
+            rows = (total_spots + spots_per_row - 1) // spots_per_row
+            
+            for row in range(rows):
+                start_idx = row * spots_per_row
+                end_idx = min(start_idx + spots_per_row, total_spots)
+                row_spots = spots[start_idx:end_idx]
+                
+                print("┌" + "─" * (len(row_spots) * 4 - 1) + "┐")
+                print("│", end="")
+                
+                for spot in row_spots:
+                    if spot.is_open():
+                        print(" [ ]", end="")
+                    else:
+                        vehicle = spot.getParkedVec()
+                        if vehicle.getType() == "MOTORCYCLE":
+                            print(" [M]", end="")
+                        elif vehicle.getType() == "CAR":
+                            print(" [C]", end="")
+                        elif vehicle.getType() == "BUS":
+                            print(" [B]", end="")
+                        else:
+                            print(" [?]", end="")
+                
+                print(" │")
+                print("└" + "─" * (len(row_spots) * 4 - 1) + "┘")
+        else:
+            # Single row display for smaller parking lots
+            print("┌" + "─" * (total_spots * 4 - 1) + "┐")
+            print("│", end="")
+            
+            for i, spot in enumerate(spots):
+                if spot.is_open():
+                    print(" [ ]", end="")
+                else:
+                    vehicle = spot.getParkedVec()
+                    if vehicle.getType() == "MOTORCYCLE":
+                        print(" [M]", end="")
+                    elif vehicle.getType() == "CAR":
+                        print(" [C]", end="")
+                    elif vehicle.getType() == "BUS":
+                        print(" [B]", end="")
+                    else:
+                        print(" [?]", end="")
+            
+            print(" │")
+            print("└" + "─" * (total_spots * 4 - 1) + "┘")
+        
+        print("Legend: M=Motorcycle, C=Car, B=Bus, [ ]=Empty")
+        print()
 
 #%%  spot
             
@@ -185,13 +246,18 @@ if __name__ == "__main__":
     successful_parking = 0
     failed_parking = 0
     
+    # Show initial empty parking lot
+    PL.display_parking_lot()
+    
     # try to park all cars
     for i in range(len(vec_set)):
         if PL.park_new_vec(vec_set[i]):
             successful_parking += 1
         else:
             failed_parking += 1
-        print()  # Add spacing between vehicles
+        
+        # Show updated parking lot status after each vehicle
+        PL.display_parking_lot()
     
     # Final summary
     print("=" * 50)
