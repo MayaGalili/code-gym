@@ -18,35 +18,39 @@ def spiralPrint(a) :
     j = 0
     n=0
     m=0
+    result = []
     
     while (mat_sz > 0):
         
 #        go right
         for j in range(m,M) :
-            print(a[i][j], end = " ")
+            result.append(a[i][j])
             mat_sz = mat_sz - 1;
         n=n+1
 
 #        go down  
         if (mat_sz > 0):
             for i in range(n,N) :
-                print(a[i][j], end = " ")
+                result.append(a[i][j])
                 mat_sz = mat_sz - 1;    
             M=M-1   
         
 #        go left
         if (mat_sz > 0):           
             for j in range(M-1,m-1,-1) :  
-                print(a[i][j], end = " ")
+                result.append(a[i][j])
                 mat_sz = mat_sz - 1           
             N=N-1 
 
 #        go up     
         if (mat_sz > 0):            
             for i in range(N-1,n-1,-1) :         
-                print(a[i][j], end = " ")
+                result.append(a[i][j])
                 mat_sz = mat_sz - 1;   
-            m=m+1 
+            m=m+1
+    
+    return result
+
 
  
 # Driver Code
@@ -57,4 +61,5 @@ a = np.array([
       [19, 20, 21, 22, 23, 24]
       ])
        
-spiralPrint(a)
+result = spiralPrint(a)
+print(" ".join(map(str, result)))
