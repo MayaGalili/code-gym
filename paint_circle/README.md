@@ -23,7 +23,10 @@ Draw circles on a matrix with an interactive Python program.
 
 ## What You Need
 
-- Python 3.9+
-- Run `uv sync` first to install dependencies
+**Prerequisites:** See [setup.md](../setup.md) for complete environment setup instructions.
+
+- Python 3.8+
+- uv package manager
+- Run `uv sync` to install dependencies
 
 That's it! The program guides you through everything.

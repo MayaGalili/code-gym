@@ -104,11 +104,19 @@ This project demonstrates:
 
 ## 🚀 Getting Started
 
-1. Make sure you have Python 3.6+ and NumPy installed
+**Prerequisites:** See [setup.md](../setup.md) for complete environment setup instructions.
+
+1. Set up the environment using uv (see [setup.md](../setup.md))
 2. Navigate to the spiral_printer directory
-3. Run `python spiral_ui.py`
+3. Run `uv run python spiral_ui.py`
 4. Follow the prompts to configure your matrix
 5. Watch the spiral magic happen! 🌀
+
+### Quick Run
+```bash
+# From the project root
+uv run python spiral_printer/spiral_ui.py
+```
 
 ---
 **Author:** Maya Galili <https://github.com/MayaGalili>

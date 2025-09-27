@@ -90,8 +90,16 @@ This project demonstrates:
 
 ## 🚀 Getting Started
 
-1. Make sure you have Python 3.6+ installed
+**Prerequisites:** See [setup.md](../setup.md) for complete environment setup instructions.
+
+1. Set up the environment using uv (see [setup.md](../setup.md))
 2. Navigate to the parkinglot directory
-3. Run `python parking_lot_ui.py`
+3. Run `uv run python parking_lot_ui.py`
 4. Follow the prompts to configure your simulation
 5. Watch the magic happen! 🎉
+
+### Quick Run
+```bash
+# From the project root
+uv run python parkinglot/parking_lot_ui.py
+```
