@@ -90,7 +90,6 @@ def plot_circle(M, center_x, center_y, radius):
     plt.ylabel('X coordinate')
     plt.legend()
     plt.grid(True, alpha=0.3)
-    plt.colorbar(label='Cell value')
     plt.show()
 
 def get_user_input():
