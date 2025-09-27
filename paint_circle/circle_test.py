@@ -93,24 +93,111 @@ def plot_circle(M, center_x, center_y, radius):
     plt.colorbar(label='Cell value')
     plt.show()
 
+def get_user_input():
+    """Get user input for circle parameters"""
+    print("=" * 50)
+    print("CIRCLE DRAWING PROGRAM")
+    print("=" * 50)
+    
+    while True:
+        try:
+            # Get radius
+            R = int(input("Enter the radius of the circle (1-20): "))
+            if 1 <= R <= 20:
+                break
+            else:
+                print("Please enter a radius between 1 and 20.")
+        except ValueError:
+            print("Please enter a valid number.")
+    
+    # Get matrix size
+    while True:
+        try:
+            size = int(input("Enter the matrix size (20-100, default 50): ") or "50")
+            if 20 <= size <= 100:
+                break
+            else:
+                print("Please enter a size between 20 and 100.")
+        except ValueError:
+            print("Please enter a valid number.")
+    
+    # Get center coordinates
+    while True:
+        try:
+            x0 = int(input(f"Enter X coordinate for center (0-{size-1}, default {size//2}): ") or str(size//2))
+            y0 = int(input(f"Enter Y coordinate for center (0-{size-1}, default {size//2}): ") or str(size//2))
+            if 0 <= x0 < size and 0 <= y0 < size:
+                break
+            else:
+                print(f"Please enter coordinates within the matrix bounds (0-{size-1}).")
+        except ValueError:
+            print("Please enter valid numbers.")
+    
+    # Check if circle fits in matrix
+    if x0 - R < 0 or x0 + R >= size or y0 - R < 0 or y0 + R >= size:
+        print(f"Warning: Circle with radius {R} at center ({x0}, {y0}) may not fit completely in {size}x{size} matrix.")
+        response = input("Continue anyway? (y/n): ").lower()
+        if response != 'y':
+            return get_user_input()  # Restart input
+    
+    return R, x0, y0, size
+
+def main():
+    """Main function with user interface"""
+    try:
+        # Get user input
+        R, x0, y0, size = get_user_input()
+        
+        # Create matrix
+        M = np.zeros((size, size))
+        
+        print(f"\nDrawing circle with radius {R} at center ({x0}, {y0})...")
+        M = paint_circle(M, R, x0, y0)
+        
+        # Ask user what they want to see
+        print("\nWhat would you like to see?")
+        print("1. Text representation")
+        print("2. Matplotlib plot")
+        print("3. Both")
+        
+        while True:
+            choice = input("Enter your choice (1-3): ")
+            if choice in ['1', '2', '3']:
+                break
+            print("Please enter 1, 2, or 3.")
+        
+        if choice in ['1', '3']:
+            print_circle_text(M, x0, y0)
+        
+        if choice in ['2', '3']:
+            plot_circle(M, x0, y0, R)
+        
+        # Print statistics
+        marked_cells = np.sum(M == 1)
+        print(f"\nCircle statistics:")
+        print(f"Radius: {R}")
+        print(f"Center: ({x0}, {y0})")
+        print(f"Matrix size: {size}x{size}")
+        print(f"Number of marked cells: {marked_cells}")
+        
+        # Ask if user wants to try again
+        while True:
+            again = input("\nWould you like to draw another circle? (y/n): ").lower()
+            if again in ['y', 'n']:
+                break
+            print("Please enter 'y' or 'n'.")
+        
+        if again == 'y':
+            main()
+        else:
+            print("Goodbye!")
+            
+    except KeyboardInterrupt:
+        print("\n\nProgram interrupted by user. Goodbye!")
+    except Exception as e:
+        print(f"\nAn error occurred: {e}")
+        print("Please try again.")
+
 ''' running example '''
 if __name__ == "__main__":
-    R = 5
-    x0, y0 = 15, 15
-    M = np.zeros((50, 50))
-    
-    print("Drawing circle...")
-    M = paint_circle(M, R, x0, y0)
-    
-    # Print text representation
-    print_circle_text(M, x0, y0)
-    
-    # Show matplotlib plot
-    plot_circle(M, x0, y0, R)
-    
-    # Print some statistics
-    marked_cells = np.sum(M == 1)
-    print(f"\nCircle statistics:")
-    print(f"Radius: {R}")
-    print(f"Center: ({x0}, {y0})")
-    print(f"Number of marked cells: {marked_cells}")
+    main()
