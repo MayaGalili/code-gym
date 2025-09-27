@@ -8,6 +8,7 @@ Created on Tue May 29 10:39:50 2018
 """
 
 import numpy as np
+import time
 
 def index_to_coords(index, rows, cols):
     """Convert row-by-row index to matrix coordinates (row, col)"""
@@ -87,6 +88,7 @@ def spiralPrint(a, visual=False):
                     if visual:
                         print(f"  Visiting cell ({i},{j}) = {a[i][j]}")
                         display_matrix(a, visited, (i, j), "→ Right")
+                        time.sleep(1)
                     mat_sz = mat_sz - 1;
             n=n+1
             if visual:
@@ -103,6 +105,7 @@ def spiralPrint(a, visual=False):
                     if visual:
                         print(f"  Visiting cell ({i},{j}) = {a[i][j]}")
                         display_matrix(a, visited, (i, j), "↓ Down")
+                        time.sleep(1)
                     mat_sz = mat_sz - 1;    
             M=M-1   
             if visual:
@@ -119,6 +122,7 @@ def spiralPrint(a, visual=False):
                     if visual:
                         print(f"  Visiting cell ({i},{j}) = {a[i][j]}")
                         display_matrix(a, visited, (i, j), "← Left")
+                        time.sleep(1)
                     mat_sz = mat_sz - 1           
             N=N-1 
             if visual:
@@ -135,6 +139,7 @@ def spiralPrint(a, visual=False):
                     if visual:
                         print(f"  Visiting cell ({i},{j}) = {a[i][j]}")
                         display_matrix(a, visited, (i, j), "↑ Up")
+                        time.sleep(1)
                     mat_sz = mat_sz - 1;   
             m=m+1
             if visual:

@@ -22,9 +22,8 @@ python spiral_ui.py
 The interactive UI allows you to:
 - **Configure matrix size**: Choose rows and columns (2-20 each)
 - **Select display mode**: 
-  - Show matrix and spiral output
-  - Show only spiral output  
-  - Show step-by-step traversal with directions
+  - Show only spiral output
+  - Show visual step-by-step matrix progression (with 1s delay)
 - **Use default values**: Press Enter for 4×6 matrix
 
 ### Direct Execution
@@ -32,6 +31,10 @@ The interactive UI allows you to:
 python spiral_printer.py
 ```
 Runs with a predefined 4×6 matrix example.
+
+### Default Values
+- **Matrix size**: 4 rows × 6 columns
+- **Display**: Visual step-by-step with 1-second delay
 
 ## 📊 Example
 
@@ -48,15 +51,33 @@ For a 4×6 matrix:
 1 2 3 4 5 6 12 18 24 23 22 21 20 19 13 7 8 9 10 11 17 16 15 14
 ```
 
-**Step-by-step visualization:**
+**Visual step-by-step matrix progression:**
 ```
-Step 1: → Right: 1 2 3 4 5 6
-Step 2: ↓ Down:  12 18 24
-Step 3: ← Left:  23 22 21 20 19
-Step 4: ↑ Up:    13 7
-Step 5: → Right: 8 9 10 11
-Step 6: ↓ Down:  17
-Step 7: ← Left:  16 15 14
+Initial matrix:
+┌─────────────────────┐
+│   1    2    3    4  │
+│   5    6    7    8  │
+│   9   10   11   12  │
+└─────────────────────┘
+
+Step 1: → Moving RIGHT
+  Visiting cell (0,0) = 1
+┌─────────────────────┐
+│  [1]   2    3    4  │
+│   5    6    7    8  │
+│   9   10   11   12  │
+└─────────────────────┘
+Direction: → Right
+[1 second delay...]
+
+  Visiting cell (0,1) = 2
+┌─────────────────────┐
+│  [1]  [2]   3    4  │
+│   5    6    7    8  │
+│   9   10   11   12  │
+└─────────────────────┘
+Direction: → Right
+[1 second delay...]
 ```
 
 ## 🏗️ Algorithm

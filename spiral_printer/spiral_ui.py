@@ -12,6 +12,7 @@ Created on Tue May 29 10:39:50 2018
 import numpy as np
 import sys
 import os
+import time
 
 # Add the current directory to the path to import spiral_printer
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -67,18 +68,16 @@ def get_display_preferences():
     print()
     print("📺 DISPLAY OPTIONS")
     print("-" * 20)
-    print("1. Show matrix and spiral output")
-    print("2. Show only spiral output")
-    print("3. Show visual step-by-step matrix progression")
-    print("4. Show text step-by-step with directions")
+    print("1. Show only spiral output")
+    print("2. Show visual step-by-step matrix progression (with 1s delay)")
     
     while True:
-        choice = input("Choose display mode (1-4) [default: 3]: ").strip()
+        choice = input("Choose display mode (1-2) [default: 2]: ").strip()
         if not choice:
-            choice = "3"
-        if choice in ['1', '2', '3', '4']:
+            choice = "2"
+        if choice in ['1', '2']:
             break
-        print("Please enter 1, 2, 3, or 4.")
+        print("Please enter 1 or 2.")
     
     return int(choice)
 
@@ -121,33 +120,19 @@ def run_simulation(rows, cols, display_mode):
     matrix = create_matrix(rows, cols)
     
     # Display matrix if requested
-    if display_mode in [1, 3]:
+    if display_mode == 2:
         display_matrix_simple(matrix)
     
     # Run spiral print based on display mode
-    if display_mode == 1:  # Show matrix and spiral output
+    if display_mode == 1:  # Show only spiral output
         print("🔄 SPIRAL OUTPUT:")
         print("-" * 20)
         result = spiralPrint(matrix)
         print(" ".join(map(str, result)))
         print("\n")
         
-    elif display_mode == 2:  # Show only spiral output
-        print("🔄 SPIRAL OUTPUT:")
-        print("-" * 20)
-        result = spiralPrint(matrix)
-        print(" ".join(map(str, result)))
-        print("\n")
-        
-    elif display_mode == 3:  # Show visual step-by-step
+    elif display_mode == 2:  # Show visual step-by-step
         result = spiralPrint(matrix, visual=True)
-        
-    elif display_mode == 4:  # Show text step-by-step
-        print("\n🔄 SPIRAL TRAVERSAL (Text Step-by-step):")
-        print("-" * 40)
-        result = spiralPrint(matrix)
-        print(f"\nFinal result: {' '.join(map(str, result))}")
-        print("\n")
     
     # Display statistics
     print("=" * 60)
