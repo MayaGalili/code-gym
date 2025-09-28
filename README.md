@@ -16,6 +16,10 @@ OOP parking lot simulation with vehicles and spots
 Matrix spiral traversal with visual display
 - **Run**: `uv run python spiral_printer/spiral_ui.py`
 
+### 4. [Reset Rows and Columns with Zeros](resetRowsWithZeros/README.md)
+Binary matrix transformation algorithm with interactive CLI
+- **Run**: `uv run python resetRowsWithZeros/reset_rows_ui.py`
+
 ## 🚀 Quick Start
 
 1. **Set up the environment**: See [setup.md](setup.md) for complete installation instructions
@@ -27,8 +31,10 @@ Matrix spiral traversal with visual display
 
 These modules demonstrate:
 - **Object-Oriented Programming** (Parking Lot)
-- **Algorithm Design** (Spiral Printer)
+- **Algorithm Design** (Spiral Printer, Reset Rows)
 - **Mathematical Visualization** (Paint Circle)
+- **Matrix Operations** (Reset Rows)
+- **Recursive Call** (Paint Circle)
 - **User Interface Design** (All modules)
 - **Dependency Management** (uv)
 
